@@ -5,6 +5,7 @@ DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8000
 
 def start_application():
+    """Entry point of the socket server"""
     try:
         host = input("Enter the host address to be exposed for connection: ")
         port = input("Enter the port to be used for the connection to be established: ")
@@ -41,10 +42,11 @@ def validatePort(port):
         return False
     return True
 
+start_application()
 
 # SOCK_STREAM is a type of socket.
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
+    s.bind((DEFAULT_HOST, DEFAULT_PORT))
     s.listen()
     conn, addr = s.accept()
     with conn:
