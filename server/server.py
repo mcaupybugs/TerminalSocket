@@ -12,7 +12,7 @@ class SocketServer:
             # TODO : Make this method better
             if self.__update_connection_ports(host, port):
                 self.host = host
-                self.port = host
+                self.port = port
             else :
                 self.host = DEFAULT_HOST
                 self.port = DEFAULT_PORT
@@ -45,13 +45,22 @@ class SocketServer:
                         break
                     conn.sendall(data)
 
+    def __update_connection_ports(self, host, port):
+        if self.__using_default_connection_ports(host, port):
+            return False
+        if (self.__validateHost(host) and self.__validatePort(port)):
+            return True
+        return False
+
+    def __using_default_connection_ports(self, host, port):
+        if host == DEFAULT_HOST or port == DEFAULT_PORT:
+            print("Using default ports")
+            return True
+        return False
+
 # Not required but keeping to learn as when connecting to socket it will throw exception if there is issue   
     def __validateHost(self, ip_address):
         """Method to validate the ip address is a valid host or not."""
-
-        if ip_address == DEFAULT_HOST:
-            print("Using default host")
-            return False
         
         match = re.match(r"[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}", ip_address)
 
@@ -68,26 +77,9 @@ class SocketServer:
 
         print(f"IP address {ip_address} is valid")
         return True
-
-    def __update_connection_ports(self, host, port):
-        if self.__using_default_ports(host, port):
-            return False
-        if (self.__validateHost(host) and self.__validatePort(port)):
-            return True
-        return False
-
-    def __using_default_ports(self, host, port):
-        if host == DEFAULT_HOST or port == DEFAULT_PORT:
-            print("Using default ports")
-            return True
-        return False
-
+    
     def __validatePort(self, port):
         """Method to validate if the port is a valid port that can be used."""
-
-        if port == DEFAULT_PORT:
-            print("Using default port")
-            return False
         
         if port <= 1024 and port > 65535:
             return False
