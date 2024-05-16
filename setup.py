@@ -6,5 +6,10 @@ setup(
     description='This is the terminal socket python library. User can use this library to communicate with the clients by creating a socket connection.',
     author='mcaupybugs',
     author_email='mcaupybugs@gmail.com',
-    packages=find_packages()
+    packages=find_packages(),
+    entry_points={
+        'console_scripts': [
+            'terminalsoc = main:main_function',  # Entry point for the main script
+        ],
+    },
 )

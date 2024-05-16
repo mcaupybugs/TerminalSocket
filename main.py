@@ -5,3 +5,6 @@ import click
 @click.option('--server', help='start the server')
 def server():
     server = SocketServer()
+
+def main():
+    print("main")
